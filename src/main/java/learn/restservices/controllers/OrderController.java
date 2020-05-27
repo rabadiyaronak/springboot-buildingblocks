@@ -19,7 +19,7 @@ import learn.restservices.repositories.OrderRepositor;
 import learn.restservices.repositories.UserRepository;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/hateoas/users")
 public class OrderController {
 
 	@Autowired
