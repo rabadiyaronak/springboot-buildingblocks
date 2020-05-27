@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import learn.restservices.entities.User;
 import learn.restservices.exceptions.UserExistsException;
+import learn.restservices.exceptions.UserNameNotFoundException;
 import learn.restservices.exceptions.UserNotFoundException;
 import learn.restservices.repositories.UserRepository;
 
@@ -62,8 +63,13 @@ public class UserService {
 	}
 
 	// get User By USer name
-	public User getUserByUserName(String userName) {
-		return userRepository.findByUserName(userName);
+	public User getUserByUserName(String userName) throws UserNameNotFoundException {
+		User user = userRepository.findByUserName(userName);
+
+		if (user == null) {
+			throw new UserNameNotFoundException("User not found for given username");
+		}
+		return user;
 	}
 
 }

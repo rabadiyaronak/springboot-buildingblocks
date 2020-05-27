@@ -3,6 +3,8 @@ package learn.restservices.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import learn.restservices.entities.User;
 import learn.restservices.exceptions.UserExistsException;
+import learn.restservices.exceptions.UserNameNotFoundException;
 import learn.restservices.exceptions.UserNotFoundException;
 import learn.restservices.services.UserService;
 
@@ -34,7 +37,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder builder) {
+	public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder) {
 		try {
 			User createdUser = userService.createUser(user);
 			HttpHeaders headers = new HttpHeaders();
@@ -69,7 +72,7 @@ public class UserController {
 	}
 
 	@GetMapping("/users/byUserName/{username}")
-	public User getUserByUserName(@PathVariable("username") String userName) {
+	public User getUserByUserName(@PathVariable("username") String userName) throws UserNameNotFoundException {
 		return userService.getUserByUserName(userName);
 	}
 
