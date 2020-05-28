@@ -13,40 +13,48 @@ import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({ "firstName", "lastName" }) -- static filter @JacksonIgnore
-@JsonFilter(value = "userFilter")
+//@JsonFilter(value = "userFilter") -- Used for mappingJscksonValue
 public class User extends RepresentationModel<User> {
 
 	@Id
 	@GeneratedValue
+	@JsonView(Views.External.class)
 	private Long id;
 
 	@NotEmpty(message = "Username is mandatory. Please provide apropriate UserName")
 	@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
+	@JsonView(Views.External.class)
 	private String userName;
 
 	@Size(min = 2, message = "FirstName should have atleast of 2 characters")
 	@Column(name = "FIRST_NAME", length = 50, nullable = false)
+	@JsonView(Views.External.class)
 	private String firstName;
 
 	@Column(name = "LAST_NAME", length = 50, nullable = false)
+	@JsonView(Views.External.class)
 	private String lastName;
 
 	@Column(name = "EMAIL", length = 50, nullable = false)
+	@JsonView(Views.External.class)
 	private String email;
 
 	@Column(name = "ROLE", length = 50, nullable = false)
+	@JsonView(Views.Internal.class)
 	private String role;
 
 	@Column(name = "SSN", length = 50, nullable = false, unique = true)
 //	@JsonIgnore -- static filter @JacksonIgnore
+	@JsonView(Views.Internal.class)
 	private String ssn;
 
 	@OneToMany(mappedBy = "user")
+	@JsonView(Views.Internal.class)
 	private List<Order> orders;
 
 	public User() {
