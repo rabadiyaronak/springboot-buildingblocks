@@ -14,7 +14,7 @@ import learn.restservices.exceptions.UserNotFoundException;
 import learn.restservices.repositories.UserRepository;
 
 @RestController
-@RequestMapping(value = "/hateoad/users")
+@RequestMapping(value = "/hateoas/users")
 public class OrderHateoasController {
 
 	private UserRepository userRepository;

@@ -19,7 +19,7 @@ import learn.restservices.repositories.OrderRepositor;
 import learn.restservices.repositories.UserRepository;
 
 @RestController
-@RequestMapping(value = "/hateoas/users")
+@RequestMapping(value = "/users")
 public class OrderController {
 
 	@Autowired
@@ -53,11 +53,11 @@ public class OrderController {
 	}
 
 	@GetMapping("/orders/{orderid}")
-	public Optional<Order> getOrderByOrderId(@PathVariable("orderid") Long orderId) throws OrderNotFoundException {
+	public Order getOrderByOrderId(@PathVariable("orderid") Long orderId) throws OrderNotFoundException {
 		Optional<Order> order = orderRepository.findById(orderId);
 		if (!order.isPresent()) {
 			throw new OrderNotFoundException("Order not found.");
 		}
-		return order;
+		return order.get();
 	}
 }

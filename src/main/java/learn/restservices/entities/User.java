@@ -15,12 +15,17 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "This model is for create user")
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({ "firstName", "lastName" }) -- static filter @JacksonIgnore
 //@JsonFilter(value = "userFilter") -- Used for mappingJscksonValue
 public class User extends RepresentationModel<User> {
 
+	@ApiModelProperty(notes = "Auto generated unique id", required = true, position = 1)
 	@Id
 	@GeneratedValue
 	@JsonView(Views.External.class)
